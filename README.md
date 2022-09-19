@@ -1,1 +1,2 @@
 # mastermind
+This is my solution for the Odin Project - Mastermind. I ended up not using classes or methods in my solution, which is not ideal. I spent too much time figuring out how to add the white color for whenever the color is present but position is wrong without violating the rule of the game (white pin cannot be added if that pin is already "taken" by another white pin or a black pin) that I am ready to move on to the next lesson. Yet, I still need to work on classes and methods and variables.

@@ -13,224 +13,101 @@ array = ['blue', 'green', 'orange', 'purple', 'red', 'yellow']
 #Main array.include? guessed color? If yes, than add white peg. 
 #If guess is correct color and position, add black peg
 
-i=0
+puts "\nDo you want to be the Codemaker or Codebreaker?\n\n"
+puts "If Codemaker, enter CM. If Codebreaker, enter CB\n\n"
+player = gets.chomp
 
-codemaker = Array.new()
-
-while i <= 3
-
-codemaker[i] = array[rand(0..5)]
-i = i+1
-
+case
+when player == 'CM'
+    puts "\nSet the board!\n\n"
+    codemaker = Array.new()
+    loop do 
+        puts "Colors to choose from: blue, green, orange, purple, red, yellow"
+        puts "Insert 4 colors separated by a space\n\n"
+        codemaker = gets.chomp.split()
+        if (codemaker.map {|x| array.include? x}).include? false
+            puts "This color doesn't exist. Try again."
+        else
+            puts "\nCM: " + codemaker.join(' ')
+            puts "\n--------------------------------"
+            break codemaker
+        end
+    end
+when player == 'CB'
+    codemaker = Array.new()
+    i=0
+    while i <= 3
+        codemaker[i] = array[rand(0..5)]
+        i = i+1
+    end
+    puts "\nReady? Press Enter to start breaking the code!\n"
+    gets.chomp
+    puts "--------------------------------"
 end
-p codemaker
-arr = codemaker
 
-round = 0
+arr = codemaker
 
 codebreaker = Array.new()
 
-while round <= 0
+round = 1
 
-    position = 0
-    while position <= 3
-        codebreaker[position] = gets.chomp
-        x = codebreaker[position]
-        position = position + 1
+while round <= 12
+
+    if player == 'CB'
+        codebreaker = gets.chomp.split()
+    elsif player == 'CM'
+        i=0
+        while i <= 3
+            codebreaker[i] = array[rand(0..5)]
+            i = i+1
+        end
     end
-    p codebreaker 
+
+    puts
+    puts "R#{round}: " + codebreaker.join(' ')
 
     arr = codemaker.zip(codebreaker).map do |x,y| 
         if x==y
-            'B'
+            'black'
         else
             x
         end
     end
 
-    arr
-    index = arr.each_index.select{|i| arr[i] == 'B'}
-    index.map {|x| codebreaker[x] = 'B'}
+    index = arr.each_index.select{|i| arr[i] == 'black'}
+    index.map {|x| codebreaker[x] = 'black'}
 
     i = 0
     while i <= 3
-        if arr[i]=='B'
-        elsif arr[i]!='B' and arr[i]!=codebreaker[i] and arr.include? codebreaker[i]
+        if arr[i]=='black'
+        elsif arr[i]!='black' and arr[i]!=codebreaker[i] and arr.include? codebreaker[i]
             num = arr.index(codebreaker[i])
-            arr[num] = 'W'
-            codebreaker[i] = 'W'
+            arr[num] = 'white'
+            codebreaker[i] = 'white'
         end
         i += 1
     end
-    arr
-    p codebreaker
 
-    # if arr[0]=='B'
-    # elsif arr[0]!='B' and arr[0]!=codebreaker[0] and arr.include? codebreaker[0]
-    #     num = arr.index(codebreaker[0])
-    #     arr[num] = 'W'
-    #     codebreaker[0] = 'W'
-    # # else
-    # #     arr[0] = '-'
-    # end
-    # p arr
-    # p codebreaker
+    puts 'CB: ' + codebreaker.join(' ')
+    puts "\n--------------------------------"
+    puts
 
-    # if arr[1]=='B'
-    # elsif arr[1]!='B' and arr[1]!=codebreaker[1] and arr.include? codebreaker[1]
-    #     p num = arr.index(codebreaker[1])
-    #     arr[num] = 'W'
-    #     codebreaker[1] = 'W'
-    # # else
-    # #     arr[1] = '-'
-    # end
-    # p arr
-    # p codebreaker
+    if codebreaker == ['black','black','black','black']
+        puts '-- You broke the code! --'
+        break
+    elsif round == 12
+        if codebreaker == ['black','black','black','black']
+            puts '-- You broke the code! --'
+        break
+        else
+            puts 'Code not broken =/'
+        end
+    end
 
-    # if arr[2]=='B'
-    # elsif arr[2]!='B' and arr[2]!=codebreaker[2] and arr.include? codebreaker[2]
-    #     p num = arr.index(codebreaker[2])
-    #     arr[num] = 'W'
-    #     codebreaker[2] = 'W'
-    # # else
-    # #     arr[2] = '-'
-    # end
-    # p arr
-    # p codebreaker
-
-    # if arr[3]=='B'
-    # elsif arr[3]!='B' and arr[3]!=codebreaker[3] and arr.include? codebreaker[3]
-    #     p num = arr.index(codebreaker[3])
-    #     arr[num] = 'W'
-    #     codebreaker[3] = 'W'
-    # # else
-    # #     arr[3] = '-'
-    # end
-    # p arr
-    # p codebreaker
-
-    # i = 0
-    # while i <= 3 do
-    #     if arr[i]=='black'
-    #     elsif arr[i]!='black' and arr[i]!=a and arr.include? codebreaker[i]
-    #         arr2[i] = 'white'
-    #     else
-    #         arr2[i] = '-'
-    #     end
-    #     i +=1
-    # end
-    # p arr
-    # p arr2
-
-
-    # arr = codemaker.zip(codebreaker).map do |x,y| 
-    #     if x==y
-    #         'black'
-    #     else
-    #         x
-    #     end
-    # end
-
-    # p arr
-
-    # if arr[0]=='black'
-    # elsif arr[0]!='black' and arr[0]!=a and arr.include? a
-    #     arr[0] = 'white'
-    # else
-    #     arr[0] = '-'
-    # end
-    # p arr
-
-    # if arr[1]=='black'
-    # elsif arr[1]!='black' and arr[1]!=b and arr.include? b
-    #     arr[1] = 'white'
-    # else
-    #     arr[1] = '-'
-    # end
-    # p arr
-
-    # if arr[2]=='black'
-    # elsif arr[2]!='black' and arr[2]!=c and arr.include? c
-    #     arr[2] = 'white'
-    # else
-    #     arr[2] = '-'
-    # end
-    # p arr
-
-    # if arr[3]=='black'
-    # elsif arr[3]!='black' and arr[3]!=d and arr.include? d
-    #     arr[3] = 'white'
-    # else
-    #     arr[3] = '-'
-    # end
-    # p arr
-    # if codemaker[2] == c
-    #     codemaker[2] = 'black'
-    # elsif codemaker[2]!=c and codemaker.include? c
-    #     codemaker[2] = 'white'
-    # else
-    #     codemaker[2] = '-'
-    # end
-    # p codemaker
-    # if codemaker[3] == d
-    #     codemaker[3] = 'black'
-    # elsif codemaker[3]!=d and codemaker.include? d
-    #     codemaker[3] = 'white'
-    # else
-    #     codemaker[3] = '-'
-    # end
-    # p codemaker
-  
-    # codemaker.zip(codebreaker)
-    # arr2 = codemaker.zip(codebreaker).map do |x,y| 
-    #     if x==y
-    #         'black'
-    #     # elsif x!=y and codemaker.include? y
-    #     #     t = codemaker.count(x)
-    #     # while t > 0
-    #     #     t -= 1
-    #     #     break 'white'
-    #     # end
-    #     else
-    #         x
-    #     end
-    # end
-
-    # codemaker = arr2
-    # p codemaker
-
-    # num = codebreaker.map {|x| codemaker.index(x)}
-    # p num
-
-    # # p codemaker.zip(codebreaker)
-    # arr3 = codemaker.zip(codebreaker).map do |x,y| 
-    #     if x!=y and codemaker.include? y and x!='black'
-    #         'white'
-    #     else
-    #         x = '-'
-    #     end
-    # end
-
-    # p arr3
-
-    # arr3 = codemaker.zip(arr2).map do |x,y| 
-    #     if x==y
-    #         'black'
-    #     # elsif x!=y and codemaker.include? y
-    #     #     t = codemaker.count(x)
-    #     # while t > 0
-    #     #     t -= 1
-    #     #     break 'white'
-    #     # end
-    #     else
-    #         y
-    #     end
-    # end
-
-    # p arr3
-
-
-    # if y!='black' and codemaker.include? y
+    case
+    when round == 11
+        puts "Last chance!\n"
+    end
 
     round = round + 1
 end
